@@ -1,0 +1,92 @@
+Out Put Run Time For Static Huffman (Global & Per Block) & Adaptive Huffman 
+
+Reading generated input text...
+Input text loaded successfully.
+Input text length: 10,000,000 characters
+
+Static Huffman - Global
+-----------------------
+Encoded data size: 46,029,402 bits
+Frequency table size: 1,048 bits
+Total encoded size: 46,030,450 bits
+Compression ratio r: 0.575381
+Number of stored tables: 1
+
+Static Huffman - Per Block
+--------------------------
+Encoded data size: 24,460,755 bits
+Frequency table size: 7,552 bits
+Total encoded size: 24,468,307 bits
+Compression ratio r: 0.305854
+Number of stored tables: 34
+
+Static Huffman results saved to: static_huffman_results.csv
+
+
+
+
+
+Reading generated input text...
+Input text loaded successfully.
+Input text length: 10,000,000 characters
+
+Starting Adaptive Huffman INERTIA parameter study...
+
+Running INERTIA = 50 ...
+Encoded size: 28,290,086 bits
+Compression ratio r: 0.353626
+
+Running INERTIA = 100 ...
+Encoded size: 27,520,993 bits
+Compression ratio r: 0.344012
+
+Running INERTIA = 200 ...
+Encoded size: 27,406,536 bits
+Compression ratio r: 0.342582
+
+Running INERTIA = 500 ...
+Encoded size: 27,422,873 bits
+Compression ratio r: 0.342786
+
+Running INERTIA = 1,000 ...
+Encoded size: 27,444,740 bits
+Compression ratio r: 0.343059
+
+Running INERTIA = 2,000 ...
+Encoded size: 27,484,161 bits
+Compression ratio r: 0.343552
+
+Running INERTIA = 5,000 ...
+Encoded size: 27,591,137 bits
+Compression ratio r: 0.344889
+
+Running INERTIA = 10,000 ...
+Encoded size: 27,764,671 bits
+Compression ratio r: 0.347058
+
+Running INERTIA = 20,000 ...
+Encoded size: 28,038,833 bits
+Compression ratio r: 0.350485
+
+Running INERTIA = 50,000 ...
+Encoded size: 29,613,002 bits
+Compression ratio r: 0.370163
+
+Running INERTIA = 100,000 ...
+Encoded size: 32,316,947 bits
+Compression ratio r: 0.403962
+
+Running INERTIA = 10,000,000 ...
+Encoded size: 46,139,741 bits
+Compression ratio r: 0.576747
+
+Adaptive Huffman results saved to: adaptive_huffman_results.csv
+
+Best Adaptive Huffman Result
+----------------------------
+Best INERTIA: 200
+Encoded size: 27,406,536 bits
+Compression ratio r: 0.342582
+
+Saving encoded output using the best INERTIA...
+This may take some time.

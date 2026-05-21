@@ -1,0 +1,3 @@
+method,encoded_data_size_bits,table_size_bits,total_encoded_size_bits,compression_ratio,number_of_tables
+Static Huffman - Global,46029402,1048,46030450,0.575380625,1
+Static Huffman - Per Block,24460755,7552,24468307,0.3058538375,34

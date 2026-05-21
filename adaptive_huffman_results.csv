@@ -1,0 +1,13 @@
+method,inertia,encoded_size_bits,compression_ratio
+Adaptive Huffman with Inertia,50,28290086,0.353626075
+Adaptive Huffman with Inertia,100,27520993,0.3440124125
+Adaptive Huffman with Inertia,200,27406536,0.3425817
+Adaptive Huffman with Inertia,500,27422873,0.3427859125
+Adaptive Huffman with Inertia,1000,27444740,0.34305925
+Adaptive Huffman with Inertia,2000,27484161,0.3435520125
+Adaptive Huffman with Inertia,5000,27591137,0.3448892125
+Adaptive Huffman with Inertia,10000,27764671,0.3470583875
+Adaptive Huffman with Inertia,20000,28038833,0.3504854125
+Adaptive Huffman with Inertia,50000,29613002,0.370162525
+Adaptive Huffman with Inertia,100000,32316947,0.4039618375
+Adaptive Huffman with Inertia,10000000,46139741,0.5767467625

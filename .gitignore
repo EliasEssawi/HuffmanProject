@@ -1,0 +1,6 @@
+generated_input.txt
+block_info.txt
+adaptive_best_output.txt
+adaptive_best_output.bin
+__pycache__/
+*.pyc
