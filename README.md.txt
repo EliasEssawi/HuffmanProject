@@ -1,0 +1,438 @@
+# HuffmanProject
+
+**Author:** Elias Essawi
+
+This project implements and compares different Huffman compression methods on a generated text file of exactly **10,000,000 characters**.
+
+The project includes:
+
+1. A custom text generator.
+2. Adaptive Huffman Coding with an `INERTIA` parameter.
+3. Static Huffman Coding using one global frequency table.
+4. Static Huffman Coding using separate frequency tables per block.
+5. A compression ratio comparison between the methods.
+
+---
+
+## Project Idea
+
+The goal of this project is to study how different Huffman coding methods behave when the input text has changing local patterns.
+
+The generated input text is divided into blocks. Each block is created by repeating one unique random word. Because each block has its own repeated word, the frequency distribution changes from block to block.
+
+This makes the project useful for comparing:
+
+- Static Huffman with one global model.
+- Static Huffman with a separate model per block.
+- Adaptive Huffman that updates its model while reading the text.
+
+---
+
+## Project Structure
+
+```text
+HuffmanProject/
+│
+├── Text_Generator.py
+├── static_huffman.py
+├── adaptive_huffman.py
+│
+├── static_huffman_results.csv
+├── adaptive_huffman_results.csv
+│
+├── Huffman_Report.docx
+├── huffman_task.pdf
+├── README.md
+└── .gitignore
+
+Some files are not uploaded to GitHub because they are generated automatically and can be large.
+
+The ignored files are:
+
+generated_input.txt
+block_info.txt
+adaptive_best_output.txt
+adaptive_best_output.bin
+
+These files are created when running the project.
+
+Generated Files
+
+When the project is executed, the following files may be generated:
+
+generated_input.txt
+
+This is the original generated input text.
+
+It contains exactly:
+
+10,000,000 characters
+
+The text is divided into:
+
+34 blocks
+
+Each block is built by repeating one unique random lowercase word.
+
+block_info.txt
+
+This file describes the generated blocks.
+
+It contains information such as:
+
+Number of blocks
+Word length
+Total text length
+Word used in each block
+Size of each block
+
+This file is useful for understanding how the input text was created.
+
+adaptive_best_output.txt
+
+This file contains the best Adaptive Huffman encoded output as text.
+
+It stores the encoded bits as characters:
+
+0 and 1
+
+This format is easy to inspect, but it is not space-efficient because every bit is stored as a text character.
+
+adaptive_best_output.bin
+
+This file contains the best Adaptive Huffman encoded output in real binary format.
+
+The bits are packed into bytes, so this is the actual compressed binary output.
+
+This is the important file if you want to see the compressed result in binary form.
+
+Requirements
+
+This project uses only standard Python libraries:
+
+heapq
+csv
+os
+random
+string
+
+No external Python packages are required.
+
+Recommended Python version:
+
+Python 3.8+
+How to Run the Project
+
+The project should be run in this order.
+
+Step 1: Generate the Input Text
+
+Run:
+
+python Text_Generator.py
+
+This creates:
+
+generated_input.txt
+block_info.txt
+
+The generator creates a text of exactly 10,000,000 characters.
+
+According to the homework rules:
+
+XX is taken from the last two digits of the student ID.
+Y is taken from the last non-zero digit of the student ID.
+Number of blocks = XX
+Word length = Y + 2
+
+In this project:
+
+XX = 34
+Y = 4
+Word length = 4 + 2 = 6
+
+So the generated text contains:
+
+34 blocks
+
+and each block is based on a unique random word of length:
+
+6 lowercase letters
+
+If generated_input.txt or block_info.txt already exists, the program asks whether to replace the files.
+
+Choose:
+
+Y
+
+to generate a new input.
+
+Choose:
+
+N
+
+to keep the existing input.
+
+Important: generating a new input text will create new random words, so the compression results may change.
+
+Step 2: Run Static Huffman
+
+Run:
+
+python static_huffman.py
+
+This program reads:
+
+generated_input.txt
+
+and runs two methods:
+
+Static Huffman - Global
+Static Huffman - Per Block
+Static Huffman - Global
+
+This method builds one frequency table for the entire input text.
+
+It then builds one Huffman tree and uses it to calculate the encoded size.
+
+Static Huffman - Per Block
+
+This method divides the input text into the same 34 blocks used by the generator.
+
+Then it builds a separate frequency table and Huffman tree for each block.
+
+This usually gives better compression because each block has its own local character distribution.
+
+After running the program, this file is created:
+
+static_huffman_results.csv
+
+The CSV file contains:
+
+method
+encoded_data_size_bits
+table_size_bits
+total_encoded_size_bits
+compression_ratio
+number_of_tables
+Step 3: Run Adaptive Huffman with INERTIA
+
+Run:
+
+python adaptive_huffman.py
+
+This program reads:
+
+generated_input.txt
+
+and runs Adaptive Huffman using several INERTIA values.
+
+The tested values are:
+
+50
+100
+200
+500
+1,000
+2,000
+5,000
+10,000
+20,000
+50,000
+100,000
+10,000,000
+
+For each value, the program calculates:
+
+encoded size in bits
+compression ratio
+
+The compression ratio is calculated as:
+
+r = encoded size in bits / original size in bits
+
+The original input size is:
+
+10,000,000 × 8 = 80,000,000 bits
+
+A smaller value of r means better compression.
+
+After testing all values, the program chooses the best INERTIA, meaning the one with the smallest compression ratio.
+
+In the included experiment, the best result was:
+
+Best INERTIA = 200
+Encoded size = 27,406,536 bits
+Compression ratio r = 0.342582
+
+The program then saves the best encoded output into:
+
+adaptive_best_output.txt
+adaptive_best_output.bin
+
+These files are ignored by Git because they are generated and can be large.
+
+What is INERTIA?
+
+INERTIA controls how quickly the Adaptive Huffman model forgets old frequencies.
+
+In the adaptive algorithm, each symbol has a weight. After every INERTIA encoded characters, all weights are divided by 2 using integer division.
+
+If a weight becomes 0, it is reset to 1.
+
+The rule is:
+
+weight = weight // 2
+
+if weight == 0:
+    weight = 1
+
+This creates a fading memory effect.
+
+Recent characters have stronger influence on the Huffman tree, while older characters slowly lose influence.
+
+This is useful because the generated input text changes from one block to another.
+
+Results Summary
+
+The best results from the experiment were:
+
+Method	Encoded Size / Total Size (bits)	Compression Ratio
+Adaptive Huffman, best INERTIA = 200	27,406,536	0.342582
+Static Huffman - Global	46,030,450	0.575381
+Static Huffman - Per Block	24,468,307	0.305854
+
+The best compression result was achieved by:
+
+Static Huffman - Per Block
+
+with:
+
+Compression ratio r = 0.305854
+Why Static Huffman Per Block Was Best
+
+The generated text is divided into 34 blocks.
+
+Each block is created by repeating one unique word of length 6.
+
+Because of this, each block has a very specific local character distribution.
+
+Static Huffman per block builds a separate frequency table for each block, so the Huffman code fits the local distribution very well.
+
+The global Static Huffman method was weaker because it used one frequency table for the entire text. This mixes the distributions of all blocks together.
+
+Adaptive Huffman performed better than global Static Huffman because it updates its weights while reading the input. However, it did not beat Static Huffman per block because the per-block method knows the full frequency distribution of each block in advance.
+
+How to Use This Project with a New Input
+
+There are two main ways to use this project.
+
+Option 1: Generate a New Homework-Style Input
+
+Run:
+
+python Text_Generator.py
+
+This creates a new generated_input.txt.
+
+Then run:
+
+python static_huffman.py
+python adaptive_huffman.py
+
+This will create new result files and new adaptive encoded output files.
+
+Option 2: Use Your Own Real Text File
+
+You can use the Huffman algorithms on a real text file.
+
+To do that:
+
+Create or choose a text file.
+Rename it to:
+generated_input.txt
+Place it in the project folder.
+Make sure the code settings match your input size.
+
+In the current code, the expected size is:
+
+TOTAL_TEXT_LENGTH = 10_000_000
+
+If your input file has a different size, update this value in the code files.
+
+For example, if your file has 1,000,000 characters, change:
+
+TOTAL_TEXT_LENGTH = 10_000_000
+
+to:
+
+TOTAL_TEXT_LENGTH = 1_000_000
+
+Then run:
+
+python static_huffman.py
+python adaptive_huffman.py
+How to Use the Encoded Files
+
+After running Adaptive Huffman, two output files are created:
+
+adaptive_best_output.txt
+adaptive_best_output.bin
+Text encoded file
+
+adaptive_best_output.txt stores the encoded bit sequence as readable text.
+
+Example:
+
+010011010101...
+
+This is useful for debugging and checking the bitstream manually.
+
+However, it is larger than the binary version because each bit is stored as a character.
+
+Binary encoded file
+
+adaptive_best_output.bin stores the same encoded data in packed binary format.
+
+This is the real compressed output.
+
+Bits are grouped into bytes and written to the file.
+
+For example:
+
+8 bits = 1 byte
+
+So the .bin file is much smaller than the .txt bit file.
+
+Important Note About Decoding
+
+This project focuses on calculating and comparing compression sizes.
+
+The current implementation saves the encoded output for the best Adaptive Huffman result, but it does not include a full decoder.
+
+To decode the binary file later, the decoder would need to reproduce the same Adaptive Huffman model updates using the same INERTIA value and the same initial alphabet weights.
+
+For the homework requirements, the main focus was encoding, compression ratio calculation, and comparison between the required methods.
+
+Git Ignore
+
+The repository uses .gitignore to avoid uploading large generated files.
+
+Ignored files:
+
+generated_input.txt
+block_info.txt
+adaptive_best_output.txt
+adaptive_best_output.bin
+__pycache__/
+*.pyc
+
+These files can be recreated by running the project.
+
+License
+
+This project was created for academic homework and learning purposes.
+
+Author:
+
+Elias Essawi
